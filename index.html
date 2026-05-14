@@ -22,6 +22,7 @@
       --card-bg: #1c1519;
       --border: rgba(255, 109, 41, 0.18);
       --nav-w: 72px;
+      --nav-h: 0px;
       --ff-display: 'Cormorant Garamond', Georgia, serif;
       --ff-body: 'Outfit', system-ui, sans-serif;
       --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
@@ -415,6 +416,22 @@
       background: linear-gradient(90deg, transparent, var(--fire), transparent);
       margin: 24px 0;
       opacity: .25
+    }
+
+    /* ═══ ABOUT GRID ═══ */
+    .about-grid {
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .about-feat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
     }
 
     /* ═══ MENU SECTION ═══ */
@@ -1085,22 +1102,132 @@
       font-family: var(--ff-body)
     }
 
-    /* ═══ MOBILE ═══ */
+    /* ═══ TABLET ═══ */
+    @media(max-width:860px) {
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+    }
+
+    /* ═══ MOBILE — bottom nav ═══ */
     @media(max-width:600px) {
+      :root {
+        --nav-w: 0px;
+        --nav-h: 58px;
+      }
+
+      #sidebar {
+        /* Switch from left sidebar to bottom bar */
+        top: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: var(--nav-h);
+        flex-direction: row;
+        padding: 0 8px;
+        border-right: none;
+        border-top: 1px solid rgba(255, 109, 41, 0.14);
+        gap: 0;
+      }
+
+      .nav-logo {
+        display: none;
+      }
+
+      .nav-main {
+        flex-direction: row;
+        flex: 1;
+        justify-content: space-around;
+        padding: 0;
+        gap: 0;
+        overflow: visible;
+      }
+
+      .nav-bottom {
+        flex-direction: row;
+        border-top: none;
+        border-left: 1px solid rgba(255, 109, 41, 0.1);
+        padding: 0 4px;
+        gap: 0;
+      }
+
+      .nav-btn {
+        width: 46px;
+        height: 46px;
+        border-radius: 10px;
+      }
+
+      /* Hide tooltips on mobile — no hover on touch */
+      .nav-tooltip {
+        display: none;
+      }
+
+      .lang-label {
+        display: none;
+      }
+
+      #app {
+        margin-left: 0;
+        padding-bottom: var(--nav-h);
+      }
+
+      /* Push toast above bottom nav */
+      .toast {
+        bottom: calc(var(--nav-h) + 12px);
+      }
+
+      .hero {
+        min-height: calc(100vh - var(--nav-h));
+        padding: 60px 16px;
+      }
+
+      .hero-stats {
+        gap: 24px;
+      }
+
       .menu-grid {
-        padding: 0 3%
+        padding: 0 3%;
       }
 
       .gallery-grid {
-        padding: 0 3%
+        padding: 0 3%;
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .gallery-featured {
+        grid-column: span 2;
       }
 
       .modal-body {
-        padding: 18px 18px 24px
+        padding: 18px 18px 24px;
       }
 
       .modal-name {
-        font-size: 1.7rem
+        font-size: 1.7rem;
+      }
+
+      .sec-header {
+        padding: 40px 5% 0;
+      }
+
+      .about-feat-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .payment-page {
+        padding: 0 4% 80px;
+      }
+
+      .account-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .copy-btn {
+        align-self: flex-end;
       }
     }
   </style>
@@ -1112,7 +1239,7 @@
   <nav id="sidebar">
     <div class="nav-logo" onclick="navigate('home')">
       <div class="nav-logo-fallback">
-        <div style="font-size:.9rem;line-height:1;color:var(--fire)">AK</div>
+        <div style="font-size:.9rem;line-height:1;color:var(--fire)">YB</div>
       </div>
     </div>
 
@@ -1124,10 +1251,13 @@
         </svg>
         <span class="nav-tooltip" data-i18n-tip="nav_home">Home</span>
       </button>
+      <!-- FIX: was a location-pin icon — now an open book / menu icon -->
       <button class="nav-btn" id="nav-menu" onclick="navigate('menu')">
         <svg viewBox="0 0 24 24">
-          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
-          <circle cx="12" cy="9" r="2.5" />
+          <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 002-2V2"/>
+          <line x1="7" y1="2" x2="7" y2="22"/>
+          <line x1="21" y1="15" x2="21" y2="22"/>
+          <path d="M21 2a3 3 0 00-3 3v4a3 3 0 003 3"/>
         </svg>
         <span class="nav-tooltip" data-i18n-tip="nav_menu">Menu</span>
       </button>
@@ -1183,7 +1313,7 @@
         <div class="hero-bg"></div>
         <div class="hero-content">
           <div class="hero-eyebrow" data-i18n="hero_eyebrow">◆ Adama's Finest · Est. 2020 ◆</div>
-          <h1 class="hero-title">Yo Bar &amp;<br><em>Restaurant</em></h1>
+          <h1 class="hero-title">Sample Bar &amp;<br><em>Restaurant</em></h1>
           <p class="hero-sub" data-i18n="hero_sub">Taste Every Thing — Full Menu</p>
           <div class="hero-divider"></div>
           <div class="hero-stats">
@@ -1207,10 +1337,11 @@
       <!-- About strip -->
       <div
         style="background:var(--surface);padding:48px 5%;border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
-        <div
-          style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center">
+        <!-- FIX: replaced inline grid style with .about-grid class for responsive control -->
+        <div class="about-grid">
           <div>
             <div class="sec-eyebrow" data-i18n="about_eyebrow">About Us</div>
+            <!-- FIX: data-i18n now uses innerHTML so <em> and <br> are preserved -->
             <div class="sec-title" style="margin-bottom:14px" data-i18n="about_title">A Taste of<br><em>Ethiopia</em>
             </div>
             <p style="font-size:.82rem;color:var(--text-muted);line-height:1.85" data-i18n="about_body">Sample Bar &amp;
@@ -1218,7 +1349,7 @@
               with international cuisine, offering a full menu from morning breakfast to late-night drinks in a warm,
               modern setting.</p>
           </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div class="about-feat-grid">
             <div
               style="background:var(--orange-dim);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center">
               <div style="font-family:var(--ff-display);font-size:2rem;color:var(--fire)">🌅</div>
@@ -1272,7 +1403,7 @@
         </div>
         <div
           style="font-size:.55rem;letter-spacing:2px;color:rgba(255,255,255,0.1);border-top:1px solid rgba(255,109,41,0.06);padding-top:16px">
-          &copy; 2026 Sample Bar &amp; Restaurant</div>
+          &copy; 2026 Bar &amp; Restaurant</div>
       </footer>
     </section>
 
@@ -1280,6 +1411,7 @@
     <section class="page-section" id="sec-menu">
       <div class="sec-header reveal">
         <div class="sec-eyebrow" data-i18n="menu_eyebrow">Full Menu</div>
+        <!-- FIX: innerHTML used in applyTranslations so <em> is preserved after lang switch -->
         <div class="sec-title" data-i18n="menu_title">Our <em>Selections</em></div>
         <div class="sec-divider"></div>
       </div>
@@ -1293,7 +1425,7 @@
         <div class="sec-eyebrow" data-i18n="gallery_eyebrow">Our Space</div>
         <div class="sec-title" data-i18n="gallery_title">Restaurant <em>Interior</em></div>
         <p style="font-size:.8rem;color:var(--text-muted);margin-top:10px;margin-bottom:0" data-i18n="gallery_sub">Step
-          inside Sample Bar &amp; Restaurant — where warmth meets style.</p>
+          inside Bar &amp; Restaurant — where warmth meets style.</p>
         <div class="sec-divider"></div>
       </div>
       <div class="gallery-grid" id="galleryGrid"></div>
@@ -1358,14 +1490,19 @@
         hero_cta: "Explore Full Menu",
         stat_dishes: "Dishes", stat_rated: "Rated", stat_est: "Established",
         about_eyebrow: "About Us",
-        about_title: "A Taste of Ethiopia",
+        // FIX: HTML markup included so innerHTML renders correctly after language switch
+        about_title: "A Taste of<br><em>Ethiopia</em>",
         about_body: "Sample Bar & Restaurant has been Adama's favourite gathering spot since 2020. We blend authentic Ethiopian flavours with international cuisine, offering a full menu from morning breakfast to late-night drinks in a warm, modern setting.",
         feat_breakfast: "Breakfast", feat_pizza: "Pizza", feat_coffee: "Coffee", feat_international: "International",
-        menu_eyebrow: "Full Menu", menu_title: "Our Selections",
-        gallery_eyebrow: "Our Space", gallery_title: "Restaurant Interior",
-        gallery_sub: "Step inside Sample Bar & Restaurant — where warmth meets style.",
-        pay_eyebrow: "Payment", pay_title: "How to Pay",
-        dev_eyebrow: "Developer", dev_title: "Built With",
+        menu_eyebrow: "Full Menu",
+        menu_title: "Our <em>Selections</em>",
+        gallery_eyebrow: "Our Space",
+        gallery_title: "Restaurant <em>Interior</em>",
+        gallery_sub: "Step inside Yo Bar & Restaurant — where warmth meets style.",
+        pay_eyebrow: "Payment",
+        pay_title: "How to <em>Pay</em>",
+        dev_eyebrow: "Developer",
+        dev_title: "Built <em>With</em>",
         foot_visit: "Visit Us", foot_hours: "Hours", foot_hours_val: "Every Day · Morning to Late Night",
         modal_desc: "Description", modal_notes: "Chef's Notes", modal_diet: "Dietary Info",
         pay_intro: "We accept several convenient payment methods. Use the copy button to quickly copy account numbers.",
@@ -1374,7 +1511,7 @@
         pay_note_boa: "Bank of Abyssinia — transfer to this account and mention your table number.",
         pay_note_cash: "Cash is always accepted at the counter or with your server.",
         pay_note_telebirr: "Send via Telebirr to this number and show confirmation to staff.",
-        dev_bio: "This application was designed and built as a modern digital menu experience for Sample Bar & Restaurant in Adama, Ethiopia. Built with pure HTML, CSS, and JavaScript — no frameworks, just craft.",
+        dev_bio: "This application was designed and built as a modern digital menu experience for Yo Bar & Restaurant in Adama, Ethiopia. Built with pure HTML, CSS, and JavaScript — no frameworks, just craft.",
         dev_tech: "Technologies Used",
         gallery_items: [
           { label: "Main Dining Area", src: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80" },
@@ -1393,14 +1530,18 @@
         hero_cta: "ሙሉ ምናሌ ይመልከቱ",
         stat_dishes: "ምግቦች", stat_rated: "ደረጃ", stat_est: "ተቋቋሙ",
         about_eyebrow: "ስለ እኛ",
-        about_title: "የኢትዮጵያ ጣዕም",
-        about_body: ".. ባር እና ሬስቶራንት ከ2020 ጀምሮ በአዳማ ዋነኛ የስብሰባ ቦታ ሆኗል። ከጠዋት ቁርስ እስከ ምሽት መጠጦች ድረስ የሚዘልቅ ሙሉ ምናሌ ያቀርባል።",
+        about_title: "የኢትዮጵያ <em>ጣዕም</em>",
+        about_body: "ዮ ባር እና ሬስቶራንት ከ2020 ጀምሮ በአዳማ ዋነኛ የስብሰባ ቦታ ሆኗል። ከጠዋት ቁርስ እስከ ምሽት መጠጦች ድረስ የሚዘልቅ ሙሉ ምናሌ ያቀርባል።",
         feat_breakfast: "ቁርስ", feat_pizza: "ፒዛ", feat_coffee: "ቡና", feat_international: "ዓለም አቀፍ",
-        menu_eyebrow: "ሙሉ ምናሌ", menu_title: "ምርጫዎቻችን",
-        gallery_eyebrow: "ቦታችን", gallery_title: "ሬስቶራንቱ ውስጥ",
-        gallery_sub: "ወደ .. ባር እና ሬስቶራንት ይግቡ — ሙቀት ከዘይቤ ጋር ይገናኛል።",
-        pay_eyebrow: "ክፍያ", pay_title: "እንዴት ይከፍሉ",
-        dev_eyebrow: "ገንቢ", dev_title: "በፍቅር ተሰርቷል ♥",
+        menu_eyebrow: "ሙሉ ምናሌ",
+        menu_title: "<em>ምርጫዎቻችን</em>",
+        gallery_eyebrow: "ቦታችን",
+        gallery_title: "ሬስቶራንቱ <em>ውስጥ</em>",
+        gallery_sub: "ወደ ዮ ባር እና ሬስቶራንት ይግቡ — ሙቀት ከዘይቤ ጋር ይገናኛል።",
+        pay_eyebrow: "ክፍያ",
+        pay_title: "እንዴት <em>ይከፍሉ</em>",
+        dev_eyebrow: "ገንቢ",
+        dev_title: "በፍቅር <em>ተሰርቷል ♥</em>",
         foot_visit: "ይጎብኙን", foot_hours: "ሰዓቶች", foot_hours_val: "ሁልቀን · ከጠዋት እስከ ምሽት",
         modal_desc: "መግለጫ", modal_notes: "የሼፍ ማስታወሻ", modal_diet: "የአመጋገብ መረጃ",
         pay_intro: "ብዙ አመቺ የክፍያ ዘዴዎችን እንቀበላለን። የሂሳብ ቁጥሮችን ለማሰናዳት ቅዳ ቁልፉን ይጠቀሙ።",
@@ -1428,14 +1569,18 @@
         hero_cta: "Sarara Guutuu Ilaaladhu",
         stat_dishes: "Nyaata", stat_rated: "Sadarkaa", stat_est: "Hundaa'e",
         about_eyebrow: "Waa'ee Keenya",
-        about_title: "Dhaamsa Itoophiyaa",
+        about_title: "Dhaamsa <em>Itoophiyaa</em>",
         about_body: "Sample Bar fi Mana Nyaataa 2020 irraa kaasee bakka walga'ii jaalatamaa ta'ee jira. Nyaata Itoophiyaa fi idil-addunyaa walitti fiduun tajaajila guutuu kenna.",
         feat_breakfast: "Quraanso", feat_pizza: "Pizza", feat_coffee: "Bunaa", feat_international: "Idil-addunyaa",
-        menu_eyebrow: "Sarara Guutuu", menu_title: "Filannoo Keenya",
-        gallery_eyebrow: "Bakki Keenya", gallery_title: "Keessoo Mana Nyaataa",
+        menu_eyebrow: "Sarara Guutuu",
+        menu_title: "Filannoo <em>Keenya</em>",
+        gallery_eyebrow: "Bakki Keenya",
+        gallery_title: "Keessoo <em>Mana Nyaataa</em>",
         gallery_sub: "Sample Bar fi Mana Nyaataa keessa seeni — ho'inni fi barruu wal argitu.",
-        pay_eyebrow: "Kaffalti", pay_title: "Akkamitti Kaffaluu",
-        dev_eyebrow: "Misoomaa", dev_title: "Jaalala Waliin Ijaarame ♥",
+        pay_eyebrow: "Kaffalti",
+        pay_title: "Akkamitti <em>Kaffaluu</em>",
+        dev_eyebrow: "Misoomaa",
+        dev_title: "Jaalala Waliin <em>Ijaarame ♥</em>",
         foot_visit: "Nu Daawwadhu", foot_hours: "Sa'aatii", foot_hours_val: "Guyyaa Guutuu · Barii irraa hanga Halkan",
         modal_desc: "Ibsa", modal_notes: "Yaada Shoofii", modal_diet: "Odeeffannoo Nyaata",
         pay_intro: "Maloota kaffalti hedduu qabna. Lakkoofsa herrega kopii gochuf buttona kopii fayyadami.",
@@ -1484,7 +1629,7 @@
           { name: { en: "Fillet Tibes", am: "ፊሌ ጥብስ", oo: "Tibs Fillet" }, price: 600, hint: { en: "Premium Beef · Jalapeños", am: "ምርጥ ሥጋ · ቃሪያ", oo: "Foon Filatame · Jalapeno" }, desc: { en: "Premium beef fillet tibs with onions, tomatoes, and herbs.", am: "ምርጥ ፊሌ ሥጋ ከቃሪያ ጋር ተጠብሷል።", oo: "Foon fillet qullubbii, tomeetii fi qorqoroosaa waliin qasse." }, details: { en: "Choice cuts of beef fillet stir-fried with onions, tomatoes, jalapeños, and rosemary in spiced butter. Tender, juicy, and full of bold Ethiopian flavour.", am: "ምርጥ ፊሌ ሥጋ ከቃሪያ ጋር — ጣዕም ያለው ምሳ።", oo: "Fillet foon filatamaa qullubbii fi jalapeno waliin." }, tags: "Beef · Spicy", img: "https://tse2.mm.bing.net/th/id/OIP.JTwTdu6oxMoCRa7ofcHfHwHaF5?rs=1&pid=ImgDetMain&o=7&rm=3" },
           { name: { en: "Shiro", am: "ሽሮ", oo: "Shiro" }, price: 280, hint: { en: "Chickpea · Berbere", am: "ሽምብራ · በርበሬ", oo: "Qorqoree · Berbere" }, desc: { en: "Smooth spiced chickpea stew served with injera.", am: "ሽምብራ ፍሬ ከበርበሬ ጋር — ጭቃ ሾርባ።", oo: "Shiro qorqoree berbere waliin — injera waliin dhiyaate." }, details: { en: "A comforting Ethiopian staple — finely ground chickpea flour simmered into a rich, velvety stew seasoned with berbere, garlic, and onions. Fasting-friendly.", am: "የሽምብራ ፍሬ ሾርባ — ከበርበሬ ጋር ቀቅሎ ቀርቧል።", oo: "Shiro aadaa Itoophiyaa — qorqoree berbere waliin." }, tags: "Vegan · Fasting-Friendly", img: "https://tse2.mm.bing.net/th/id/OIP.vkCAsrQHh-JSrDAl5IdaOwHaFy?rs=1&pid=ImgDetMain&o=7&rm=3" },
           { name: { en: "Keywet", am: "ቅወት", oo: "Keywet" }, price: 450, hint: { en: "Slow-Simmered Beef Stew", am: "ቀርቧ የበሬ ሾርባ", oo: "Suphee Foon Foonni Saalfate" }, desc: { en: "Slow-simmered red beef stew with berbere and niter kibbeh.", am: "ቀርቧ ቅወት ከበርበሬ እና ቅቤ ጋር ቀቅሎ ቀርቧል።", oo: "Keywet suphee berbere fi kibbeh waliin." }, details: { en: "A cornerstone of Ethiopian cuisine — beef slow-cooked in a deeply spiced berbere and niter kibbeh sauce until fall-apart tender.", am: "የኢትዮጵያ ምግብ ምሰሶ — ቅወት ከበርበሬ ጋር ቀቅሎ ቀርቧል።", oo: "Bu'uura nyaata Itoophiyaa — keywet berbere fi kibbeh waliin." }, tags: "Beef · Spicy · Gluten", img: "https://tse3.mm.bing.net/th/id/OIP.oAz--4jzrBB_3-MWoyetTQHaFj?rs=1&pid=ImgDetMain&o=7&rm=3" },
-          { name: { en: "Traditional Combo", am: "ባህላዊ ኮምቦ", oo: "Walitti fidumsaa Aadaa" }, price: 1700, hint: { en: "Grand Platter · Shareable", am: "ባህላዊ ምጣድ", oo: "Palet Guddaa" }, desc: { en: "A grand platter of traditional Ethiopian meat and vegetable stews.", am: "ባህላዊ ምጣድ — ሥጋ እና አትክልት ሾርባዎች።", oo: "Palet aadaa Itoophiyaa guddaa — suphee foon fi kuduraa." }, details: { en: "The ultimate Ethiopian feast — a large injera-lined platter topped with a curated selection of meat and vegetable stews, representing the very best of our traditional kitchen.", am: "ዮ ባህላዊ ምጣድ — ምርጥ ምግቦቻቻን ሁሉ።", oo: "Ayyaana nyaataa Itoophiyaa — injera fi suphee hedduu." }, tags: "Meat · Gluten · Shareable", img: "https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=800&q=80" },
+          { name: { en: "Traditional Combo", am: "ባህላዊ ኮምቦ", oo: "Walitti fidumsaa Aadaa" }, price: 1700, hint: { en: "Grand Platter · Shareable", am: "ባህላዊ ምጣድ", oo: "Palet Guddaa" }, desc: { en: "A grand platter of traditional Ethiopian meat and vegetable stews.", am: "ባህላዊ ምጣድ — ሥጋ እና አትክልት ሾርባዎች።", oo: "Palet aadaa Itoophiyaa guddaa — suphee foon fi kuduraa." }, details: { en: "The ultimate Ethiopian feast — a large injera-lined platter topped with a curated selection of meat and vegetable stews, representing the very best of our traditional kitchen.", am: "ባህላዊ ምጣድ — ምርጥ ምግቦቻቻን ሁሉ።", oo: "Ayyaana nyaataa Itoophiyaa — injera fi suphee hedduu." }, tags: "Meat · Gluten · Shareable", img: "https://images.unsplash.com/photo-1567620832903-9fc6debc209f?w=800&q=80" },
         ]
       },
       snack: {
@@ -1492,8 +1637,8 @@
         label: { en: "03 — Quick Bites", am: "03 — ፈጣን ምግብ", oo: "03 — Nyaata Ariifataa" },
         title: { en: "Snack", am: "ቆረጣ", oo: "Ciqilee" },
         items: [
-          { name: { en: "Yo Special Burger", am: "ዮ ስፔሻል በርገር", oo: "Burger Addaa Yo" }, price: 530, hint: { en: "Signature Sauce · Toasted Bun", am: "ምልክት ሾርባ", oo: "Salsaa Addaa" }, desc: { en: "Yo Bar's signature house burger with special sauce.", am: "ዮ ባር ምልክት ቡርገር ከስፔሻል ሾርባ ጋር።", oo: "Burger addaa Yo Bar salsaa addaa waliin." }, details: { en: "Our signature house burger — a juicy seasoned patty layered with our special Yo sauce, fresh vegetables, and toasted bun.", am: "ዮ ቡርገር — ስፔሻል ሾርባ ያለው።", oo: "Burger aaddaa Yo — salsaa addaa fi kuduraa haraa waliin." }, tags: "Gluten · Meat · Signature", img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&q=80" },
-          { name: { en: "Yo Feshta Burger", am: "ዮ ፌሽታ ቡርገር", oo: "Burger Ayyaanaa Yo" }, price: 700, hint: { en: "Premium · Double Sauce", am: "ምርጥ · ድርብ ሾርባ", oo: "Premium · Salsaa Lamaa" }, desc: { en: "Premium loaded burger — the Yo celebration burger.", am: "ምርጥ ቡርገር — ዮ ፌሽታ ቡርገር።", oo: "Burger premium — ayyaana Yo." }, details: { en: "Our premium celebration burger stacked with extra fillings, double sauce, and everything that makes a burger unforgettable.", am: "ዮ ፌሽታ ቡርገር — ምርጥ ቡርገር ከድርብ ሾርባ ጋር።", oo: "Burger ayyaanaa premium — guutummaawwan dabalataa fi salsaa lamaan." }, tags: "Gluten · Meat · Premium", img: "https://images.unsplash.com/photo-1550547660-d9450f859349?w=800&q=80" },
+          { name: { en: "Special Burger", am: "ስፔሻል በርገር", oo: "Burger Addaa" }, price: 530, hint: { en: "Signature Sauce · Toasted Bun", am: "ምልክት ሾርባ", oo: "Salsaa Addaa" }, desc: { en: "Bar's signature house burger with special sauce.", am: "ባር ምልክት ቡርገር ከስፔሻል ሾርባ ጋር።", oo: "Burger addaa Bar salsaa addaa waliin." }, details: { en: "Our signature house burger — a juicy seasoned patty layered with our special sauce, fresh vegetables, and toasted bun.", am: "ቡርገር — ስፔሻል ሾርባ ያለው።", oo: "Burger aaddaa salsaa addaa fi kuduraa haraa waliin." }, tags: "Gluten · Meat · Signature", img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&q=80" },
+          { name: { en: "Feshta Burger", am: "ፌሽታ ቡርገር", oo: "Burger Ayyaanaa" }, price: 700, hint: { en: "Premium · Double Sauce", am: "ምርጥ · ድርብ ሾርባ", oo: "Premium · Salsaa Lamaa" }, desc: { en: "Premium loaded burger — the celebration burger.", am: "ምርጥ ቡርገር — ፌሽታ ቡርገር።", oo: "Burger premium — ayyaana." }, details: { en: "Our premium celebration burger stacked with extra fillings, double sauce, and everything that makes a burger unforgettable.", am: "ፌሽታ ቡርገር — ምርጥ ቡርገር ከድርብ ሾርባ ጋር።", oo: "Burger ayyaanaa premium — guutummaawwan dabalataa fi salsaa lamaan." }, tags: "Gluten · Meat · Premium", img: "https://images.unsplash.com/photo-1550547660-d9450f859349?w=800&q=80" },
           { name: { en: "Chicken Shewarema", am: "ዶሮ ሻዋርማ", oo: "Chicken Shawarma" }, price: 580, hint: { en: "Garlic Sauce · Fresh Wrap", am: "ሽንኩርት ሾርባ · ዝርጋ", oo: "Salsaa Qullubbii · Wrap" }, desc: { en: "Spiced shawarma-style chicken wrap with fresh vegetables.", am: "ዶሮ ሻዋርማ ከሽንኩርት ሾርባ ጋር ቀርቧል።", oo: "Shawarma doro salsaa qullubbii fi kuduraa haraan." }, details: { en: "Marinated and slow-roasted chicken carved into a soft wrap with garlic sauce, fresh tomatoes, and crunchy vegetables.", am: "ዶሮ ሻዋርማ — ሽንኩርት ሾርባ ያለው።", oo: "Doro marinated ykn danda'ame — salsaa qullubbii fi kuduraa haraa." }, tags: "Poultry · Gluten", img: "https://tse3.mm.bing.net/th/id/OIP.mt0fJeCO7s8LVC5HTN5PdwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3" },
           { name: { en: "Club Sandwich", am: "ክለብ ሳንድዊች", oo: "Sandwich Klaba" }, price: 530, hint: { en: "Triple-Decker · Toasted", am: "ሦስት ደረጃ · ቆሎ", oo: "Sadii Sadarkaa · Daabboo" }, desc: { en: "Classic triple-decker club sandwich with chicken and fresh fillings.", am: "ሦስት ደረጃ ሳንድዊች ከዶሮ ጋር ቀርቧል።", oo: "Sandwich sadarkaa sadii doro fi guutummaawwan haraan." }, details: { en: "The timeless triple-decker — toasted layers stacked with chicken, fresh lettuce, tomato, cheese, and a creamy spread.", am: "ሳንድዊች ሦስት ደረጃ — ዶሮ ፣ ቲማቲም ፣ ቅቤ ያለው።", oo: "Sandwich sadarkaa sadii — doro, tomeetii, cheese fi spread." }, tags: "Poultry · Dairy · Gluten", img: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=800&q=80" },
           { name: { en: "Chips", am: "ቺፕስ", oo: "Chipsii" }, price: 350, hint: { en: "Golden · Crispy · Salted", am: "ወርቃማ · ቆሎ", oo: "Warqee · Ciiccoo" }, desc: { en: "Crispy golden fried potato chips.", am: "ወርቃማ ቆሎ ድንቹ ቺፕስ ቀርቧል።", oo: "Chipsii burtukaanaa ciiccoo fi dafaa." }, details: { en: "Golden, crispy fried potato chips — perfectly salted and served hot.", am: "ድንቹ ቺፕስ — ቆሎ ወርቃማ ቀርቧል።", oo: "Chipsii burtukaanaa ho'aa fi miliqii dhiyaate." }, tags: "Vegan · Gluten", img: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=800&q=80" },
@@ -1537,7 +1682,7 @@
         label: { en: "07 — Blended", am: "07 — ጭማቂ", oo: "07 — Jiitii" },
         title: { en: "Juice & Shakes", am: "ጭማቂ እና ሻኬ", oo: "Jiitii fi Shake" },
         items: [
-          { name: { en: "Yo Special Juice", am: "ዮ ስፔሻል ጭማቂ", oo: "Jiitii Addaa Yo" }, price: 220, hint: { en: "Secret Blend · Seasonal", am: "ምስጢር ቅልቅል", oo: "Walitti fidumsaa Dhoqqee" }, desc: { en: "Yo Bar's signature blend of fresh seasonal fruits.", am: "ዮ ባር ምልክት ጭማቂ — ትኩስ ፍሬዎች ቅልቅል።", oo: "Jiitii addaa Yo Bar — firii haraa walitti fidame." }, details: { en: "A secret blend of fresh seasonal fruits crafted by our juicers — vibrant, sweet, and bursting with natural goodness.", am: "ዮ ስፔሻል ጭማቂ — ምስጢር ፍሬ ቅልቅል ቀርቧል።", oo: "Jiitii dhoqqee Yo — firii haraa yeroo walitti fidame." }, tags: "Vegan · Fresh · Signature", img: "https://images.unsplash.com/photo-1613478223719-2ab802602423?w=800&q=80" },
+          { name: { en: "Special Juice", am: "ስፔሻል ጭማቂ", oo: "Jiitii Addaa" }, price: 220, hint: { en: "Secret Blend · Seasonal", am: "ምስጢር ቅልቅል", oo: "Walitti fidumsaa Dhoqqee" }, desc: { en: "Bar's signature blend of fresh seasonal fruits.", am: "ባር ምልክት ጭማቂ — ትኩስ ፍሬዎች ቅልቅል።", oo: "Jiitii addaa Bar — firii haraa walitti fidame." }, details: { en: "A secret blend of fresh seasonal fruits crafted by our juicers — vibrant, sweet, and bursting with natural goodness.", am: "ስፔሻል ጭማቂ — ምስጢር ፍሬ ቅልቅል ቀርቧል።", oo: "Jiitii dhoqqee bar — firii haraa yeroo walitti fidame." }, tags: "Vegan · Fresh · Signature", img: "https://images.unsplash.com/photo-1613478223719-2ab802602423?w=800&q=80" },
           { name: { en: "Avocado Juice", am: "አቮካዶ ጭማቂ", oo: "Jiitii Avocado" }, price: 200, hint: { en: "Thick · Creamy · Natural", am: "ወፍራም · ቅቤ", oo: "Gurraacaa · Cream" }, desc: { en: "Thick and creamy fresh avocado juice.", am: "ወፍራም ቅቤ አቮካዶ ጭማቂ ቀርቧል።", oo: "Jiitii avocado gurraacaa fi cream." }, details: { en: "Pure, fresh avocado blended into a thick and luscious juice. Creamy, mild, and packed with natural healthy fats — an Ethiopian café staple.", am: "አቮካዶ ጭማቂ — ወፍራም ፣ ቅቤ ያለው ቀርቧል።", oo: "Jiitii avocado haraa — gurraacaa fi cream." }, tags: "Vegan · Healthy", img: "https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?w=800&q=80" },
           { name: { en: "Oreo Shake", am: "ኦሪዮ ሻኬ", oo: "Shake Oreo" }, price: 320, hint: { en: "Indulgent · Dessert in a Glass", am: "ጣፋጭ · ብርጭቆ ውስጥ ምሳ", oo: "Mi'aa · Dessert" }, desc: { en: "Creamy blended Oreo cookie milkshake.", am: "ኦሪዮ ኩኪ ሻኬ ቀርቧል።", oo: "Shake Oreo cream waliin." }, details: { en: "Crushed Oreo cookies blended with creamy milk and ice cream into a thick, indulgent shake. A dessert in a glass that nobody can resist.", am: "ኦሪዮ ሻኬ — ወተት ፣ አይስ ክሪም ያለው።", oo: "Shake Oreo — ciiccoo, aannan fi ice cream." }, tags: "Dairy · Sweet", img: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=800&q=80" },
           { name: { en: "Strawberry Shake", am: "ስትሮቤሪ ሻኬ", oo: "Shake Strawberry" }, price: 300, hint: { en: "Fresh · Vibrant Pink", am: "ትኩስ · ሮዝ ቀለም", oo: "Haraa · Halluu Adii-Diimaa" }, desc: { en: "Sweet and creamy fresh strawberry milkshake.", am: "ትኩስ ስትሮቤሪ ሻኬ ቀርቧል።", oo: "Shake strawberry haraa fi cream." }, details: { en: "Fresh strawberries blended with creamy milk into a vibrant pink milkshake. Fruity, sweet, and utterly refreshing.", am: "ስትሮቤሪ ሻኬ — ትኩስ ፣ ሮዝ ቀለም ያለው።", oo: "Shake strawberry — haraa, halluu adii-diimaa." }, tags: "Dairy · Fresh", img: "https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?w=800&q=80" },
@@ -1638,9 +1783,11 @@
     function t(key) { return (T[currentLang] && T[currentLang][key]) || T.en[key] || key; }
     function tItem(obj) { return obj[currentLang] || obj.en || ''; }
 
+    /* FIX: use innerHTML so <em> tags and <br> in translation strings render correctly.
+       data-i18n-tip tooltips are plain text only, so textContent is kept for those. */
     function applyTranslations() {
       document.querySelectorAll('[data-i18n]').forEach(el => {
-        el.textContent = t(el.dataset.i18n);
+        el.innerHTML = t(el.dataset.i18n);
       });
       document.querySelectorAll('[data-i18n-tip]').forEach(el => {
         el.textContent = t(el.dataset.i18nTip);
@@ -1651,18 +1798,20 @@
     /* ═══════════════ RENDER MENU ═══════════════ */
     function renderMenu() {
       const tabs = document.getElementById('menuTabs');
-      const grid = document.getElementById('menuGrid');
       const cats = Object.keys(menuData);
       tabs.innerHTML = cats.map(k => `
-    <button class="menu-tab ${k === currentCat ? 'active' : ''}" onclick="switchCat('${k}')">${menuData[k].icon} ${menuData[k].title[currentLang] || menuData[k].title.en}</button>
-  `).join('');
+        <button class="menu-tab ${k === currentCat ? 'active' : ''}" onclick="switchCat('${k}', this)">
+          ${menuData[k].icon} ${menuData[k].title[currentLang] || menuData[k].title.en}
+        </button>
+      `).join('');
       renderCat();
     }
 
-    function switchCat(cat) {
+    /* FIX: accept the button element directly instead of relying on the unreliable global `event` */
+    function switchCat(cat, btn) {
       currentCat = cat;
-      document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
-      event.target.classList.add('active');
+      document.querySelectorAll('.menu-tab').forEach(el => el.classList.remove('active'));
+      btn.classList.add('active');
       renderCat();
     }
 
@@ -1670,24 +1819,24 @@
       const grid = document.getElementById('menuGrid');
       const d = menuData[currentCat];
       grid.innerHTML = `
-    <div class="menu-cat" style="grid-column:1/-1">
-      <div class="cat-label">${tItem(d.label)}</div>
-      <div class="cat-name">${tItem(d.title)} ${d.icon}</div>
-    </div>
-    ${d.items.map((item, i) => `
-      <li class="menu-card" onclick="openModal(${JSON.stringify(currentCat)},${i})" style="list-style:none">
-        <img class="card-img" src="${item.img}" alt="${tItem(item.name)}" loading="lazy" onerror="this.style.background='var(--brown)'"/>
-        <div class="card-body">
-          <div class="card-name">${tItem(item.name)}</div>
-          <div class="card-hint">${tItem(item.hint)}</div>
+        <div class="menu-cat" style="grid-column:1/-1">
+          <div class="cat-label">${tItem(d.label)}</div>
+          <div class="cat-name">${tItem(d.title)} ${d.icon}</div>
         </div>
-        <div>
-          <div class="card-price">${item.price.toLocaleString()} birr</div>
-          <div class="card-arrow">${t('modal_notes').split("'")[0]} →</div>
-        </div>
-      </li>
-    `).join('')}
-  `;
+        ${d.items.map((item, i) => `
+          <li class="menu-card" onclick="openModal('${currentCat}',${i})" style="list-style:none">
+            <img class="card-img" src="${item.img}" alt="${tItem(item.name)}" loading="lazy" onerror="this.style.background='var(--brown)'"/>
+            <div class="card-body">
+              <div class="card-name">${tItem(item.name)}</div>
+              <div class="card-hint">${tItem(item.hint)}</div>
+            </div>
+            <div>
+              <div class="card-price">${item.price.toLocaleString()} birr</div>
+              <div class="card-arrow">View →</div>
+            </div>
+          </li>
+        `).join('')}
+      `;
     }
 
     /* ═══════════════ MODAL ═══════════════ */
@@ -1716,86 +1865,86 @@
       const items = t('gallery_items');
       const grid = document.getElementById('galleryGrid');
       grid.innerHTML = items.map((g, i) => `
-    <div class="gallery-item ${i === 0 ? 'gallery-featured' : ''}">
-      <img src="${g.src}" alt="${g.label}" loading="lazy"/>
-      <div class="gallery-overlay"><div class="gallery-label">${g.label}</div></div>
-    </div>
-  `).join('');
+        <div class="gallery-item ${i === 0 ? 'gallery-featured' : ''}">
+          <img src="${g.src}" alt="${g.label}" loading="lazy"/>
+          <div class="gallery-overlay"><div class="gallery-label">${g.label}</div></div>
+        </div>
+      `).join('');
     }
 
     /* ═══════════════ RENDER PAYMENT ═══════════════ */
     function renderPayment() {
       const el = document.getElementById('paymentContent');
       el.innerHTML = `
-    <p class="payment-intro">${t('pay_intro')}</p>
+        <p class="payment-intro">${t('pay_intro')}</p>
 
-    <div class="payment-card">
-      <div class="payment-type">Commercial Bank of Ethiopia</div>
-      <div class="payment-name">CBE Transfer</div>
-      <div class="account-row">
-        <div class="account-info">
-          <div class="account-label">Account Number</div>
-          <div class="account-number" id="cbe-num">1000 5588 7721 4439</div>
+        <div class="payment-card">
+          <div class="payment-type">Commercial Bank of Ethiopia</div>
+          <div class="payment-name">CBE Transfer</div>
+          <div class="account-row">
+            <div class="account-info">
+              <div class="account-label">Account Number</div>
+              <div class="account-number" id="cbe-num">1000 5588 7531 4439</div>
+            </div>
+            <button class="copy-btn" onclick="copyNum('cbe-num',this)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              ${t('copy_btn')}
+            </button>
+          </div>
+          <div class="account-row">
+            <div class="account-info">
+              <div class="account-label">Account Name</div>
+              <div class="account-number">Sample Bar &amp; Restaurant</div>
+            </div>
+          </div>
+          <p class="payment-note">${t('pay_note_cbe')}</p>
         </div>
-        <button class="copy-btn" onclick="copyNum('cbe-num',this)">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-          ${t('copy_btn')}
-        </button>
-      </div>
-      <div class="account-row">
-        <div class="account-info">
-          <div class="account-label">Account Name</div>
-          <div class="account-number">Yo Bar & Restaurant</div>
-        </div>
-      </div>
-      <p class="payment-note">${t('pay_note_cbe')}</p>
-    </div>
 
-    <div class="payment-card">
-      <div class="payment-type">Bank of Abyssinia</div>
-      <div class="payment-name">BOA Transfer</div>
-      <div class="account-row">
-        <div class="account-info">
-          <div class="account-label">Account Number</div>
-          <div class="account-number" id="boa-num">0032 4471 8899 0012</div>
+        <div class="payment-card">
+          <div class="payment-type">Bank of Abyssinia</div>
+          <div class="payment-name">BOA Transfer</div>
+          <div class="account-row">
+            <div class="account-info">
+              <div class="account-label">Account Number</div>
+              <div class="account-number" id="boa-num">0032 4471 8899 0012</div>
+            </div>
+            <button class="copy-btn" onclick="copyNum('boa-num',this)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              ${t('copy_btn')}
+            </button>
+          </div>
+          <div class="account-row">
+            <div class="account-info">
+              <div class="account-label">Account Name</div>
+              <div class="account-number">Sample Bar &amp; Restaurant</div>
+            </div>
+          </div>
+          <p class="payment-note">${t('pay_note_boa')}</p>
         </div>
-        <button class="copy-btn" onclick="copyNum('boa-num',this)">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-          ${t('copy_btn')}
-        </button>
-      </div>
-      <div class="account-row">
-        <div class="account-info">
-          <div class="account-label">Account Name</div>
-          <div class="account-number">Yo Bar & Restaurant</div>
-        </div>
-      </div>
-      <p class="payment-note">${t('pay_note_boa')}</p>
-    </div>
 
-    <div class="payment-card">
-      <div class="payment-type">Telebirr Mobile</div>
-      <div class="payment-name">Telebirr</div>
-      <div class="account-row">
-        <div class="account-info">
-          <div class="account-label">Phone Number</div>
-          <div class="account-number" id="tel-num">+251 91 234 5678</div>
+        <div class="payment-card">
+          <div class="payment-type">Telebirr Mobile</div>
+          <div class="payment-name">Telebirr</div>
+          <div class="account-row">
+            <div class="account-info">
+              <div class="account-label">Phone Number</div>
+              <div class="account-number" id="tel-num">+251 933xxxxxxxxx</div>
+            </div>
+            <button class="copy-btn" onclick="copyNum('tel-num',this)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              ${t('copy_btn')}
+            </button>
+          </div>
+          <p class="payment-note">${t('pay_note_telebirr')}</p>
         </div>
-        <button class="copy-btn" onclick="copyNum('tel-num',this)">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-          ${t('copy_btn')}
-        </button>
-      </div>
-      <p class="payment-note">${t('pay_note_telebirr')}</p>
-    </div>
 
-    <div class="payment-card" style="text-align:center;padding:32px">
-      <div style="font-size:2rem;margin-bottom:10px">💵</div>
-      <div class="payment-type" style="text-align:center;margin-bottom:6px">Walk-In</div>
-      <div class="payment-name" style="margin-bottom:6px">Cash</div>
-      <p class="payment-note" style="text-align:center">${t('pay_note_cash')}</p>
-    </div>
-  `;
+        <div class="payment-card" style="text-align:center;padding:32px">
+          <div style="font-size:2rem;margin-bottom:10px">💵</div>
+          <div class="payment-type" style="text-align:center;margin-bottom:6px">Walk-In</div>
+          <div class="payment-name" style="margin-bottom:6px">Cash</div>
+          <p class="payment-note" style="text-align:center">${t('pay_note_cash')}</p>
+        </div>
+      `;
     }
 
     function copyNum(id, btn) {
@@ -1819,35 +1968,35 @@
     /* ═══════════════ RENDER DEVELOPER ═══════════════ */
     function renderDev() {
       document.getElementById('devContent').innerHTML = `
-    <div class="dev-card">
-      <div class="dev-avatar">YB</div>
-      <div class="dev-name">Yo Digital</div>
-      <div class="dev-role">${t('dev_eyebrow')} · Adama, Ethiopia</div>
-      <p class="dev-bio">${t('dev_bio')}</p>
-      <div class="dev-links">
-        <a class="dev-link" href="mailto:info@yobar.et">✉ Contact</a>
-        <a class="dev-link" href="#">🌐 Website</a>
-      </div>
-    </div>
-    <div class="dev-card">
-      <div class="dev-tech-label">${t('dev_tech')}</div>
-      <div class="dev-tags">
-        <span class="dev-tag">HTML5</span>
-        <span class="dev-tag">CSS3</span>
-        <span class="dev-tag">Vanilla JS</span>
-        <span class="dev-tag">Google Fonts</span>
-        <span class="dev-tag">Cormorant Garamond</span>
-        <span class="dev-tag">Outfit</span>
-        <span class="dev-tag">Intersection Observer</span>
-        <span class="dev-tag">CSS Variables</span>
-        <span class="dev-tag">i18n (3 Languages)</span>
-        <span class="dev-tag">Dark/Light Theme</span>
-      </div>
-    </div>
-    <div style="text-align:center;padding:20px;color:var(--text-dim);font-size:.65rem;letter-spacing:2px;text-transform:uppercase">
-      © 2026 Yo Bar & Restaurant · Built with ♥ in Adama, Ethiopia
-    </div>
-  `;
+        <div class="dev-card">
+          <div class="dev-avatar">AK</div>
+          <div class="dev-name">AK Digital Marketing</div>
+          <div class="dev-role">${t('dev_eyebrow')} · Adama, Ethiopia</div>
+          <p class="dev-bio">${t('dev_bio')}</p>
+          <div class="dev-links">
+            <a class="dev-link" href="mailto:info@yobar.et">✉ Contact</a>
+            <a class="dev-link" href="#">🌐 Website</a>
+          </div>
+        </div>
+        <div class="dev-card">
+          <div class="dev-tech-label">${t('dev_tech')}</div>
+          <div class="dev-tags">
+            <span class="dev-tag">HTML5</span>
+            <span class="dev-tag">CSS3</span>
+            <span class="dev-tag">Vanilla JS</span>
+            <span class="dev-tag">Google Fonts</span>
+            <span class="dev-tag">Cormorant Garamond</span>
+           
+            <span class="dev-tag">Intersection Observer</span>
+            <span class="dev-tag">CSS Variables</span>
+            <span class="dev-tag">i18n (3 Languages)</span>
+            <span class="dev-tag">Dark/Light Theme</span>
+          </div>
+        </div>
+        <div style="text-align:center;padding:20px;color:var(--text-dim);font-size:.65rem;letter-spacing:2px;text-transform:uppercase">
+          © 2026 Sample Bar &amp; Restaurant · Built By AK Digital Marketing in Adama, Ethiopia
+        </div>
+      `;
     }
 
     /* ═══════════════ TOAST ═══════════════ */
